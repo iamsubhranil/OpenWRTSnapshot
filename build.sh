@@ -15,11 +15,11 @@ cp -R files openwrt-imagebuilder-*/
 
 echo "Preparing package list.."
 
-BASE=$(cat base.list | tr '\n' ' ')
+# BASE=$(cat base.list | tr '\n' ' ')
 BASE_RM=-$(cat base_rm.list | tr '\n' ' -')
 BASE_ADD=$(cat base_add.list | tr '\n' ' ')
 
-PACKAGES="$BASE $BASE_ADD $BASE_RM"
+PACKAGES="$BASE_ADD $BASE_RM"
 
 PROFILE="tplink_archer-c6u-v1"
 
