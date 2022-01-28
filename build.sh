@@ -28,4 +28,4 @@ FILES="files"
 
 echo "Running make.."
 
-make image PACKAGES="{$PACKAGES}" PROFILE="{$PROFILE}" FILES="{$FILES}"
+make image PACKAGES="$PACKAGES" PROFILE="$PROFILE" FILES="$FILES"
