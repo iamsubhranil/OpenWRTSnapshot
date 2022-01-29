@@ -1,0 +1,16 @@
+#!/bin/sh /etc/rc.common
+
+log() {
+    logger -t "Ignition" $*
+}
+
+START=99
+STOP=99
+
+start() {
+    log "Ignition complete.."
+    log "Preparing first stage.."
+
+    chmod +x /root/first_stage.sh
+    /root/first_stage.sh
+}

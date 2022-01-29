@@ -15,7 +15,6 @@ cp -R files openwrt-imagebuilder-*/
 
 echo "Preparing package list.."
 
-# BASE=$(cat base.list | tr '\n' ' ')
 BASE_RM=$(cat base_rm.list)
 BASE_ADD=$(cat base_add.list | tr '\n' ' ')
 
