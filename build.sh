@@ -30,4 +30,4 @@ cd openwrt-imagebuilder-*/
 
 echo "Running make.."
 
-make image PACKAGES="$PACKAGES" PROFILE="$PROFILE" FILES="$FILES"
+make image PACKAGES="$PACKAGES" PROFILE="$PROFILE" FILES="$FILES" CONFIG_IPV6=n
