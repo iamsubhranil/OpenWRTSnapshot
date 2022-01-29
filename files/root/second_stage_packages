@@ -22,7 +22,6 @@ htop
 https-dns-proxy
 iperf3
 lsof
-luci-app-argon-config
 luci-app-commands
 luci-app-https-dns-proxy
 luci-app-samba4
@@ -30,7 +29,6 @@ luci-app-simple-adblock
 luci-app-vnstat
 luci-compat
 luci-lib-ipkg
-luci-theme-argon
 luci-ssl
 openssh-client
 openssh-keygen
