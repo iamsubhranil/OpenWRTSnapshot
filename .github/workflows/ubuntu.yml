@@ -7,6 +7,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: Build
         run: chmod +x ./build.sh && ./build.sh
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            openwrt-*/bin/targets/ramips/mt7621/*.bin
+          body: Snapshot build at ${{ steps.date.outputs.date }}
+          tag_name: ${{ steps.date.outputs.date }}
