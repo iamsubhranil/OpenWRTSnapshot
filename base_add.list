@@ -1,10 +1,12 @@
 block-mount
 e2fsprogs
 kmod-fs-ext4
-luci
+uhttpd
+uhttpd-mod-ubus
+libiwinfo-lua
+luci-base
 luci-app-firewall
 luci-app-opkg
-luci-base
 luci-mod-admin-full
 luci-mod-network
 luci-mod-status
