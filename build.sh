@@ -7,7 +7,7 @@ chmod +x ./prereq.sh
 
 echo "Downloading image builder.."
 
-wget https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-imagebuilder-ramips-mt7621.Linux-x86_64.tar.xz
+wget -q https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-imagebuilder-ramips-mt7621.Linux-x86_64.tar.xz
 
 echo "Extracting image builder.."
 tar -J -x -f openwrt-imagebuilder-*.tar.xz
