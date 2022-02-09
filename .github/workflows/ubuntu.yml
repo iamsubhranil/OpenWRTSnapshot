@@ -3,7 +3,7 @@ name: Ubuntu Build
 on: 
   push:
   schedule:
-    - cron '30 0 * * 0'
+    - cron: '30 0 * * 0'
 
 
 jobs:
