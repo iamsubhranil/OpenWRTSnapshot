@@ -1,6 +1,10 @@
 name: Ubuntu Build
 
-on: push
+on: 
+  push:
+  schedule:
+    - cron '30 0 * * 0'
+
 
 jobs:
   build:
