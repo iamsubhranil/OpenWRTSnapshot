@@ -25,5 +25,6 @@ jobs:
         with:
           files: |
             images/*.bin
+            images/version.buildinfo
           body: Snapshot build at ${{ steps.date.outputs.date }}
           tag_name: ${{ steps.date.outputs.date }}
