@@ -38,5 +38,5 @@ cd ..
 mkdir -p images
 cp openwrt-*/bin/targets/ramips/mt7621/*.bin images/
 FILENAME=openwrt-ramips-mt7621-tplink_archer-c6u-v1-squashfs-sysupgrade
-sha256sum images/$FILENAME.bin | tr -f0 -d' ' > images/$FILENAME.sha256
+sha256sum images/$FILENAME.bin | cut -f1 -d' ' > images/$FILENAME.sha256
 wget -q https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/version.buildinfo -O images/$FILENAME.version
