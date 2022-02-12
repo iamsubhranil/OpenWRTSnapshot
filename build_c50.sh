@@ -34,4 +34,6 @@ make image PACKAGES="$PACKAGES" PROFILE="$PROFILE"
 cd ..
 mkdir -p images
 cp openwrt-*/bin/targets/ramips/mt76x8/*.bin images/
-wget -q https://downloads.openwrt.org/snapshots/targets/ramips/mt76x8/version.buildinfo -O images/version.buildinfo
+FILENAME=openwrt-ramips-mt76x8-tplink_archer-c50-v4-squashfs-sysupgrade
+sha256sum images/$FILENAME.bin | tr -f0 -d' ' > images/$FILENAME.sha256
+wget -q https://downloads.openwrt.org/snapshots/targets/ramips/mt76x8/version.buildinfo -O images/$FILENAME.version
