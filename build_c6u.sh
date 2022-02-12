@@ -37,3 +37,4 @@ make image PACKAGES="$PACKAGES" PROFILE="$PROFILE" FILES="$FILES" CONFIG_IPV6=n
 cd ..
 mkdir -p images
 cp openwrt-*/bin/targets/ramips/mt7621/*.bin images/
+wget -q https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/version.buildinfo -o images/version.buildinfo

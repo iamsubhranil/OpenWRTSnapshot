@@ -34,3 +34,4 @@ make image PACKAGES="$PACKAGES" PROFILE="$PROFILE"
 cd ..
 mkdir -p images
 cp openwrt-*/bin/targets/ramips/mt76x8/*.bin images/
+wget -q https://downloads.openwrt.org/snapshots/targets/ramips/mt76x8/version.buildinfo -o images/version.buildinfo
