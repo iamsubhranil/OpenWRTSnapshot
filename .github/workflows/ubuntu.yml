@@ -1,6 +1,7 @@
 name: Ubuntu Build
 
-on: 
+on:
+  workflow_dispatch:
   push:
   schedule:
     - cron: '30 0 * * 0'
