@@ -9,7 +9,11 @@ echo "Downloading image builder.."
 
 rm -rf openwrt-imagebuilder-*
 
+FILENAME=openwrt-ramips-mt7621-tplink_archer-c6u-v1-squashfs-sysupgrade
+
+mkdir -p images
 wget -q https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/openwrt-imagebuilder-ramips-mt7621.Linux-x86_64.tar.xz
+wget -q https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/version.buildinfo -O images/$FILENAME.version
 
 echo "Extracting image builder.."
 tar -J -x -f openwrt-imagebuilder-*.tar.xz
@@ -35,8 +39,5 @@ echo "Running make.."
 make image PACKAGES="$PACKAGES" PROFILE="$PROFILE" FILES="$FILES" CONFIG_IPV6=n
 
 cd ..
-mkdir -p images
 cp openwrt-*/bin/targets/ramips/mt7621/*.bin images/
-FILENAME=openwrt-ramips-mt7621-tplink_archer-c6u-v1-squashfs-sysupgrade
 sha256sum images/$FILENAME.bin | cut -f1 -d' ' > images/$FILENAME.sha256
-wget -q https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/version.buildinfo -O images/$FILENAME.version
