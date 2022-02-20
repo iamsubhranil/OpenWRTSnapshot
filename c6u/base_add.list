@@ -1,6 +1,7 @@
 block-mount
 e2fsprogs
 kmod-fs-ext4
+kmod-usb-storage-uas
 uhttpd
 uhttpd-mod-ubus
 libiwinfo-lua

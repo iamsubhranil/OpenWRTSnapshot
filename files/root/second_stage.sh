@@ -12,6 +12,7 @@ log() {
 
 PACKAGES=$(cat second_stage_packages | tr '\n' ' ')
 log "Installing packages: $PACKAGES"
+opkg update
 opkg install $PACKAGES
 
 # log "Disabling second stage.."
@@ -28,9 +29,9 @@ log "Enabling vnstat_backup"
 log "Setting up argon.."
 cd /tmp
 opkg install luci-compat
-wget --no-check-certificate https://github.com/jerrykuku/luci-theme-argon/releases/download/v2.2.9/luci-theme-argon_2.2.9-20211016-1_all.ipk
-wget --no-check-certificate https://github.com/jerrykuku/luci-theme-argon/releases/download/v2.2.9/luci-app-argon-config_0.9-20210309_all.ipk
-opkg install luci-theme-argon*.ipk luci-app-argon*.ipk
+wget --no-check-certificate https://github.com/jerrykuku/luci-theme-argon/releases/download/v2.2.9/luci-theme-argon_2.2.9-20211016-1_all.ipk -O luci-app-argon.ipk
+wget --no-check-certificate https://github.com/jerrykuku/luci-theme-argon/releases/download/v2.2.9/luci-app-argon-config_0.9-20210309_all.ipk -O luci-theme-argon.ipk
+opkg install luci-theme-argon.ipk luci-app-argon.ipk
 
 log "Rebooting.."
 reboot

@@ -1,5 +1,8 @@
 bind-dig
+coreutils-sort
 curl
+file
+gawk
 git
 grep
 htop
@@ -7,10 +10,11 @@ iperf3
 luci-app-https-dns-proxy
 luci-app-samba4
 luci-app-simple-adblock
-luci-app-vnstat
+luci-app-vnstat2
 luci-ssl
 openssh-client
 openssh-server
 openssh-sftp-server
+sed
 sudo
 tar
