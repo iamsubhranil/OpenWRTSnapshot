@@ -1,11 +1,12 @@
-#!/bin/sh /etc/rc.common
+#!/bin/sh
 
 log() {
-    logger -t "First Stage" $*
+    # logger -t "First Stage" $*
+	echo "[$(date)] [FirstStage] $*" >> upgrade.log
 }
 
-log "Sleeping for 2mins.."
-sleep 120
+# log "Sleeping for 2mins.."
+# sleep 120
 
 log "Configuring rootfs_data.."
 DEVICE="$(sed -n -e "/\s\/overlay\s.*$/s///p" /etc/mtab)"
@@ -41,12 +42,12 @@ uci set fstab.swap="swap"
 uci set fstab.swap.device="/dev/sda3"
 uci commit fstab
 
-log "Preparing second stage.."
-chmod +x ./setup_second_stage
-cp setup_second_stage /etc/init.d/setup_second_stage
-service setup_second_stage enable
-service setup_first_stage disable
-rm /etc/init.d/setup_first_stage
+# log "Preparing second stage.."
+# chmod +x ./setup_second_stage
+# cp setup_second_stage /etc/init.d/setup_second_stage
+# /etc/init.d/setup_second_stage enable
+# /etc/init.d/setup_first_stage disable
+# rm /etc/init.d/setup_first_stage
 
 DEVICE="/dev/sda1"
 log "Transferring data to new /overlay.."
@@ -54,7 +55,7 @@ mkdir -p /tmp/cproot
 mkdir -p /mnt/sda1
 mount --bind /overlay /tmp/cproot
 mount ${DEVICE} /mnt/sda1
-tar -C /tmp/cproot -cvf - . | tar -C /mnt/sda1 -xf -	
+tar -C /tmp/cproot -cvf - . | tar -C /mnt/sda1 -xf -
 umount /tmp/cproot /mnt/sda1
 rm -rf /mnt/sda1
 

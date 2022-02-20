@@ -1,27 +1,29 @@
-#!/bin/sh /etc/rc.common
+#!/bin/sh
 
 log() {
-    logger -t "Second Stage" $*
+    # logger -t "Second Stage" $*
+	echo "[$(date)] [SecondStage] $*" >> upgrade.log
 }
 
-log "Sleeping for 2mins.."
-sleep 120
+# log "Sleeping for 2mins.."
+# sleep 120
 
-log "Starting second stage.."
+# log "Starting second stage.."
 
-log "Installing packages.."
-opkg install $(cat second_stage_packages | tr '\n' ' ')
+PACKAGES=$(cat second_stage_packages | tr '\n' ' ')
+log "Installing packages: $PACKAGES"
+opkg install $PACKAGES
 
-log "Disabling second stage.."
-service setup_second_stage disable
-rm /etc/init.d/setup_second_stage
+# log "Disabling second stage.."
+# /etc/init.d/setup_second_stage disable
+# rm /etc/init.d/setup_second_stage
 
 log "Enabling openssh.."
-service dropbear disable
-service sshd enable
+/etc/init.d/dropbear disable
+/etc/init.d/sshd enable
 
 log "Enabling vnstat_backup"
-service vnstat_backup enable
+/etc/init.d/vnstat_backup enable
 
 log "Setting up argon.."
 cd /tmp
