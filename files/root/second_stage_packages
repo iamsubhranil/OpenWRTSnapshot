@@ -7,9 +7,7 @@ git
 grep
 htop
 iperf3
-luci-app-https-dns-proxy
 luci-app-samba4
-luci-app-simple-adblock
 luci-app-vnstat2
 luci-ssl
 openssh-client
