@@ -10,7 +10,7 @@ set -o pipefail
 # save stdout and stderr to file 
 # descriptors 3 and 4, 
 # then redirect them to upgrade.log
-exec 3>&1 4>&2 >/root/upgrade.log 2>&1
+exec 3>&1 4>&2 >>/root/upgrade.log 2>&1
 
 FILENAME=openwrt-ramips-mt7621-tplink_archer-c6u-v1-squashfs-sysupgrade
 URL=https://github.com/iamsubhranil/OpenWRTSnapshot/releases/latest/download/
