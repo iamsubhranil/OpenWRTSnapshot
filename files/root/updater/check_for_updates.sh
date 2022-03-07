@@ -10,6 +10,7 @@ set -o pipefail
 LOCAL_VERSION=$(cat /etc/openwrt_version)
 FILENAME=openwrt-ramips-mt7621-tplink_archer-c6u-v1-squashfs-sysupgrade
 URL=https://github.com/iamsubhranil/OpenWRTSnapshot/releases/latest/download/
+DIR=$(pwd)
 
 while true
 do
@@ -24,6 +25,7 @@ do
 		CMD="cd /root/OpenWRTSnapshot; git pull; echo \"[$(date)] [ArcherC6UV1] Local ver: $LOCAL_VERSION, snapshot ver: $LATEST_SNAPSHOT\" >> build_requests.log; git add build_requests.log; git commit -m \"build: Build requested by ArcherC6UV1 at $(date)\"; git push;"
 		log "Executing git push to trigger GitHub build.."
 		eval "$CMD"
+		cd "$DIR"
 		log "Build triggered on GitHub by push!"
 		while true
 		do
