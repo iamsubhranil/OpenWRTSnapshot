@@ -51,8 +51,8 @@ uci set fstab.swap.device="/dev/sda3"
 uci commit fstab
 
 log "Preparing second stage.."
-chmod +x ./z_setup_second_stage
-cp ./z_setup_second_stage /etc/init.d/z_setup_second_stage
+chmod +x /root/setup/z_setup_second_stage
+cp /root/setup/z_setup_second_stage /etc/init.d/z_setup_second_stage
 /etc/init.d/z_setup_second_stage enable
 
 log "Disabling and removing first stage.."
