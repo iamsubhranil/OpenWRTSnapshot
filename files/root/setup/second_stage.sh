@@ -27,7 +27,8 @@ log "Enabling openssh.."
 /etc/init.d/dropbear disable
 /etc/init.d/sshd enable
 
-log "Enabling vnstat_backup"
+log "Enabling vnstat_backup.."
+/etc/init.d/vnstat_backup restore
 /etc/init.d/vnstat_backup enable
 
 log "Disabling second stage.."
