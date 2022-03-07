@@ -2,8 +2,16 @@
 
 log() {
     # logger -t "First Stage" $*
-	echo "[$(date)] [FirstStage] $*" >> upgrade.log
+	echo "[$(date)] [FirstStage] $*" >> /root/upgrade.log
 }
+
+set -e
+set -o pipefail
+
+# save stdout and stderr to file 
+# descriptors 3 and 4, 
+# then redirect them to upgrade.log
+exec 3>&1 4>&2 >/root/upgrade.log 2>&1
 
 # log "Sleeping for 2mins.."
 # sleep 120
@@ -42,12 +50,14 @@ uci set fstab.swap="swap"
 uci set fstab.swap.device="/dev/sda3"
 uci commit fstab
 
-# log "Preparing second stage.."
-# chmod +x ./setup_second_stage
-# cp setup_second_stage /etc/init.d/setup_second_stage
-# /etc/init.d/setup_second_stage enable
-# /etc/init.d/setup_first_stage disable
-# rm /etc/init.d/setup_first_stage
+log "Preparing second stage.."
+chmod +x ./z_setup_second_stage
+cp ./z_setup_second_stage /etc/init.d/z_setup_second_stage
+/etc/init.d/z_setup_second_stage enable
+
+log "Disabling and removing first stage.."
+/etc/init.d/z_setup_first_stage disable
+rm /etc/init.d/z_setup_first_stage
 
 DEVICE="/dev/sda1"
 log "Transferring data to new /overlay.."

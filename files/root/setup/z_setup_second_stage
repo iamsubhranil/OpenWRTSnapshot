@@ -1,0 +1,15 @@
+#!/bin/sh /etc/rc.common
+
+log() {
+	echo "[$(date)] [FirstStage] $*" >> /root/upgrade.log
+}
+
+START=99
+
+start() {
+    log "First stage complete!"
+    log "Starting second stage.."
+
+    chmod +x /root/setup/second_stage.sh
+    /root/setup/second_stage.sh
+}

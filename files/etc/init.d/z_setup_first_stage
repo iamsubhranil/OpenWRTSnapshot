@@ -1,0 +1,15 @@
+#!/bin/sh /etc/rc.common
+
+log() {
+	echo "[$(date)] [LiftOff] $*" >> /root/upgrade.log
+}
+
+START=99
+
+start() {
+    log "Lift off complete.."
+    log "Preparing first stage.."
+
+    chmod +x /root/setup/first_stage.sh
+    /root/setup/first_stage.sh
+}
