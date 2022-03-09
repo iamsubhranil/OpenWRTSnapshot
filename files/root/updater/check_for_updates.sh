@@ -26,14 +26,12 @@ do
 		log "Executing git push to trigger GitHub build.."
 		eval "$CMD"
 		cd "$DIR"
-		log "Build triggered on GitHub by push!"
+		log "Build triggered on GitHub by push, waiting for completion.."
 		while true
 		do
-			log "Checking build status on GitHub.."
 			LATEST_GITHUB=$(wget -qO- $URL/$FILENAME.version)
 			if [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ]; then
-				log "Build yet not completed on GitHub, sleeping for 1min.."
-				sleep 60
+				sleep 10
 			else
 				break
 			fi
