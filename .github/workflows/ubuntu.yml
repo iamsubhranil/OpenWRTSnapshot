@@ -3,6 +3,8 @@ name: Ubuntu Build
 on:
   workflow_dispatch:
   push:
+    paths:
+      - 'build_requests.log'
 
 
 jobs:
@@ -14,8 +16,14 @@ jobs:
         uses: actions/checkout@v2
       - name: Build Archer C6U v1
         run: chmod +x ./build_c6u.sh && ./build_c6u.sh
+      - name: Copy Archer C6U firmware version
+        id: c6u_ver
+        run: echo "::set-output name=ver::$(cat images/openwrt-ramips-mt7621-tplink_archer-c6u-v1-squashfs-sysupgrade.version)"
       - name: Build Archer C50 v6
         run: chmod +x ./build_c50.sh && ./build_c50.sh
+      - name: Copy Archer C50 firmware version
+        id: c50_ver
+        run: echo "::set-output name=ver::$(cat images/openwrt-ramips-mt76x8-tplink_archer-c50-v4-squashfs-sysupgrade.version)"
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y.%m.%d_%H.%M.%S')"
@@ -26,5 +34,5 @@ jobs:
             images/*.bin
             images/*.version
             images/*.sha256
-          body: Snapshot build at ${{ steps.date.outputs.date }}
+          body: Versions => Archer C6Uv1: ${{ steps.c6u_ver.outputs.ver }}, Archer C50v6: ${{ steps.c50_ver.outputs.ver }}
           tag_name: ${{ steps.date.outputs.date }}
