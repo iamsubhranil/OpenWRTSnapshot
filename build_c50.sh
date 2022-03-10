@@ -28,12 +28,13 @@ PACKAGES="$BASE_ADD $BASE_RM"
 echo "Packages: " $PACKAGES
 
 PROFILE="tplink_archer-c50-v4"
+FILES="c50/files"
 
 cd openwrt-imagebuilder-*/
 
 echo "Running make.."
 
-make image PACKAGES="$PACKAGES" PROFILE="$PROFILE"
+make image PACKAGES="$PACKAGES" PROFILE="$PROFILE" FILES="$FILES"
 
 cd ..
 cp openwrt-*/bin/targets/ramips/mt76x8/*.bin images/
