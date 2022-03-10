@@ -30,7 +30,7 @@ echo "Packages: " $PACKAGES
 
 PROFILE="tplink_archer-c6u-v1"
 
-FILES="files"
+FILES="c6u/files"
 
 cd openwrt-imagebuilder-*/
 
