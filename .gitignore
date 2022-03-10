@@ -1,2 +1,4 @@
 openwrt-imagebuilder-*
 *.bin
+*.tar.gz
+*.log
