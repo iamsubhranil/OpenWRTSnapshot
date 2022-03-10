@@ -34,5 +34,5 @@ jobs:
             images/*.bin
             images/*.version
             images/*.sha256
-          body: Versions => Archer C6Uv1: ${{ steps.c6u_ver.outputs.ver }}, Archer C50v6: ${{ steps.c50_ver.outputs.ver }}
+          body: "Versions => Archer C6Uv1: ${{ steps.c6u_ver.outputs.ver }}, Archer C50v6: ${{ steps.c50_ver.outputs.ver }}"
           tag_name: ${{ steps.date.outputs.date }}
