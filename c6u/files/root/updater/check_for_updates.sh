@@ -22,22 +22,23 @@ do
 		sleep 1800
 	else
 		log "New version found: $LATEST_SNAPSHOT!"
-		CMD="cd /root/OpenWRTSnapshot; git pull; echo \"[$(date)] [ArcherC6UV1] Local ver: $LOCAL_VERSION, snapshot ver: $LATEST_SNAPSHOT\" >> build_requests.log; git add build_requests.log; git commit -m \"build: Build requested by ArcherC6UV1 at $(date)\"; git push;"
-		log "Executing git push to trigger GitHub build.."
-		eval "$CMD"
-		cd "$DIR"
-		log "Build triggered on GitHub by push, waiting for completion.."
-		while true
-		do
-			LATEST_GITHUB=$(wget -qO- $URL/$FILENAME.version)
-			if [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ]; then
-				sleep 10
-			else
-				break
-			fi
-		done
-		log "Build completed on GitHub!"
-		break
+		LATEST_GITHUB=$(wget -qO- $URL/$FILENAME.version)
+		if [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ]; then
+            CMD="cd /root/OpenWRTSnapshot; git pull; echo \"[$(date)] [ArcherC6UV1] Local ver: $LOCAL_VERSION, snapshot ver: $LATEST_SNAPSHOT\" >> build_requests.log; git add build_requests.log; git commit -m \"build: Build requested by ArcherC6UV1 at $(date)\"; git push;"
+            log "Executing git push to trigger GitHub build.."
+            eval "$CMD"
+            cd "$DIR"
+            log "Build triggered on GitHub by push, waiting for completion.."
+            while [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ];
+            do
+                sleep 10
+                LATEST_GITHUB=$(wget -qO- $URL/$FILENAME.version)
+            done
+            log "Build completed on GitHub!"
+        else
+            log "New build already available in GitHub!"
+        fi
+        break
 	fi
 done
 
