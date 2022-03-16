@@ -24,9 +24,9 @@ do
 		log "New version found: $LATEST_SNAPSHOT!"
 		LATEST_GITHUB=$(wget -qO- $URL/$FILENAME.version)
 		if [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ]; then
-            CMD="cd /root/OpenWRTSnapshot; git pull; echo \"[$(date)] [ArcherC6UV1] Local ver: $LOCAL_VERSION, snapshot ver: $LATEST_SNAPSHOT\" >> build_requests.log; git add build_requests.log; git commit -m \"build: Build requested by ArcherC6UV1 at $(date)\"; git push;"
+		    DEVICE="ArcherC6Uv1"
             log "Executing git push to trigger GitHub build.."
-            eval "$CMD"
+            . ./trigger_build.sh
             cd "$DIR"
             log "Build triggered on GitHub by push, waiting for completion.."
             while [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ];

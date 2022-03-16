@@ -23,7 +23,7 @@ do
         log "New version found: $LATEST_SNAPSHOT!"
 		LATEST_GITHUB=$(wget -qO- $URL/$FILENAME.version)
 		if [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ]; then
-            CMD="cd /root/OpenWRTSnapshot; git pull; echo \"[$(date)] [ArcherC50v6] Local ver: $LOCAL_VERSION, snapshot ver: $LATEST_SNAPSHOT\" >> build_requests.log; git add build_requests.log; git commit -m \"build: Build requested by ArcherC50v6 at $(date)\"; git push;"
+            CMD="cd /root/updater/; LOCAL_VERSION=$LOCAL_VERSION; LATEST_SNAPSHOT=$LATEST_SNAPSHOT; DEVICE=ArcherC50v6; ./trigger_build.sh"
             log "Executing git push on C6U to trigger GitHub build.."
             dbclient -i /etc/dropbear/dropbear_rsa_host_key root@192.168.1.1 "$CMD"
             log "Build triggered on GitHub by push, waiting for completion.."
