@@ -33,10 +33,12 @@ PROFILE="tplink_archer-c6u-v1"
 FILES="c6u/files"
 
 cd openwrt-imagebuilder-*/
+mkdir files
+cp -R ../$FILES/* files
 
 echo "Running make.."
 
-make image PACKAGES="$PACKAGES" PROFILE="$PROFILE" FILES="$FILES" CONFIG_IPV6=n
+make image PACKAGES="$PACKAGES" PROFILE="$PROFILE" FILES="files" CONFIG_IPV6=n
 
 cd ..
 cp openwrt-*/bin/targets/ramips/mt7621/*.bin images/
