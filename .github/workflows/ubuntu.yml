@@ -15,12 +15,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build Archer C6U v1
-        run: chmod +x ./build_c6u.sh && ./build_c6u.sh
+        run: cd c6u && chmod +x ./build.sh && ./build.sh
       - name: Copy Archer C6U firmware version
         id: c6u_ver
         run: echo "::set-output name=ver::$(cat images/openwrt-ramips-mt7621-tplink_archer-c6u-v1-squashfs-sysupgrade.version)"
       - name: Build Archer C50 v6
-        run: chmod +x ./build_c50.sh && ./build_c50.sh
+        run: cd c50 && chmod +x ./build.sh && ./build.sh
       - name: Copy Archer C50 firmware version
         id: c50_ver
         run: echo "::set-output name=ver::$(cat images/openwrt-ramips-mt76x8-tplink_archer-c50-v4-squashfs-sysupgrade.version)"
