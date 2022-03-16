@@ -4,8 +4,8 @@
 
 echo "Installing prerequisites.."
 
-chmod +x ./prereq.sh
-. ./prereq.sh
+chmod +x ../prereq.sh
+. ../prereq.sh
 
 BUILDER=openwrt-imagebuilder-$TARGET-$SUBTARGET.Linux-x86_64
 FILENAME=openwrt-$TARGET-$SUBTARGET-$PROFILE-squashfs-sysupgrade
