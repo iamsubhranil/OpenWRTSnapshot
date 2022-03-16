@@ -37,13 +37,10 @@ rm /etc/init.d/z_setup_second_stage
 rm -f /rwm/upper/etc/rc.d/S99z_setup_second_stage
 rm -f /rwm/upper/etc/init.d/z_setup_second_stage
 
-log "Copying setup complete notifier to uci-defaults.."
-chmod +x /root/setup/setup_notify.sh
-cp /root/setup/setup_notify.sh /etc/uci-defaults/
-
-log "Removing setup scripts.."
-rm -rf /root/setup
-rm -rf /rwm/upper/root/setup
+log "Enabling final stage.."
+chmod +x /root/setup/z_setup_final_stage
+cp /root/setup/z_setup_final_stage /etc/init.d/
+/etc/init.d/z_setup_final_stage enable
 
 log "Rebooting.."
 reboot
