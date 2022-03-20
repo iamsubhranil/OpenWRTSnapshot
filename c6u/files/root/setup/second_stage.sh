@@ -1,9 +1,7 @@
 #!/bin/sh
 
-log() {
-    # logger -t "Second Stage" $*
-	echo "[$(date)] [SecondStage] $*" >> /root/upgrade.log
-}
+LOGGER_PROMPT="SecondStage"
+. /root/updater/logger.sh
 
 set -e
 set -o pipefail

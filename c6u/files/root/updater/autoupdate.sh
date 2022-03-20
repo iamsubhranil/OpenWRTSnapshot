@@ -1,8 +1,7 @@
 #!/bin/sh
 
-log() {
-	echo "[$(date)] [LiftOff] $*" >> /root/upgrade.log
-}
+LOGGER_PROMPT="LiftOff"
+. /root/updater/logger.sh
 
 set -e
 set -o pipefail
@@ -47,8 +46,12 @@ if [ "$LOCAL_SHA" != "$REMOTE_SHA" ]; then
 fi
 
 log "Firmware verification completed successfully!"
-log "Copying first_boot notifier to uci-defaults.."
-cp first_boot.sh /etc/uci-defaults/
+
+if [ -f "first_boot.sh" ];
+then
+    log "Copying first_boot notifier to uci-defaults.."
+    cp first_boot.sh /etc/uci-defaults/
+fi
 
 # the new firmware will contain some version of the updater
 # scripts anyway, so we don't need to preserve them for now

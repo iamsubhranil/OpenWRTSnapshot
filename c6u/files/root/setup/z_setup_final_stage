@@ -1,10 +1,8 @@
 #!/bin/sh /etc/rc.common
 
-log() {
-	echo "[$(date)] [SecondStage] $*" >> /root/upgrade.log
-}
-
 START=99
+LOGGER_PROMPT="SecondStage"
+. /root/updater/logger.sh
 
 start() {
     log "Second stage complete!"

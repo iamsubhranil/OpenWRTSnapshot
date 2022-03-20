@@ -1,8 +1,7 @@
 #!/bin/sh
 
-log() {
-	echo "[$(date)] [Orbiter] $*" >> /root/upgrade.log
-}
+LOGGER_PROMPT="Orbiter"
+. /root/updater/logger.sh
 
 set -e
 set -o pipefail

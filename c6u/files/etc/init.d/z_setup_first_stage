@@ -1,10 +1,8 @@
 #!/bin/sh /etc/rc.common
 
-log() {
-	echo "[$(date)] [LiftOff] $*" >> /root/upgrade.log
-}
-
 START=99
+LOGGER_PROMPT="LiftOff"
+. /root/updater/logger.sh
 
 start() {
     log "Lift off complete.."

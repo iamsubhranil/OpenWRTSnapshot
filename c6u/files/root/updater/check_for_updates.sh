@@ -1,8 +1,7 @@
 #!/bin/sh
 
-log() {
-        echo "[$(date)] [Ignition] $*" >> /root/upgrade.log
-}
+LOGGER_PROMPT="Ignition"
+. /root/updater/logger.sh
 
 set -e
 set -o pipefail
@@ -43,4 +42,5 @@ do
 done
 
 log "Executing updater script.."
-. ./autoupdate.sh
+chmod +x /root/updater/autoupdate.sh
+sh /root/updater/autoupdate.sh
