@@ -10,6 +10,7 @@ chmod +x ../prereq.sh
 BUILDER=openwrt-imagebuilder-$TARGET-$SUBTARGET.Linux-x86_64
 FILENAME=openwrt-$TARGET-$SUBTARGET-$PROFILE-squashfs-sysupgrade
 IMAGE_DIR=../images
+COMMON_FILE_DIR=../common
 
 rm -rf $BUILDER $BUILDER.tar.xz
 
@@ -23,7 +24,10 @@ echo "Extracting image builder.."
 tar -J -x -f $BUILDER.tar.xz
 
 echo "Copying custom files.."
+# copy specific files
 cp -R files $BUILDER/
+# copy common files
+rsync -avh $COMMON_FILE_DIR $BUILDER/files
 
 echo "Preparing package list.."
 

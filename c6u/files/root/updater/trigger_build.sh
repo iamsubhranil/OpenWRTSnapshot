@@ -2,6 +2,7 @@
 
 # Requires DEVICE, LOCAL_VERSION, LATEST_SNAPSHOT
 
+DIR=$(pwd)
 REPO_DIR="/tmp/OpenWRTSnapshot"
 
 echo "Checking git dir.."
@@ -18,3 +19,5 @@ echo "$BUILD_MESSAGE" >> build_requests.log
 git add build_requests.log
 git commit -m "build: $COMMIT_MESSAGE"
 git push
+
+cd "$DIR"

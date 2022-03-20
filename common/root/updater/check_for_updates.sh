@@ -1,37 +1,35 @@
 #!/bin/sh
 
 LOGGER_PROMPT="Ignition"
-. /root/updater/logger.sh
+. /root/updater/common.sh
 
 set -e
 set -o pipefail
 
 LOCAL_VERSION=$(cat /etc/openwrt_version)
-FILENAME=openwrt-ramips-mt7621-tplink_archer-c6u-v1-squashfs-sysupgrade
-URL=https://github.com/iamsubhranil/OpenWRTSnapshot/releases/latest/download/
-DIR=$(pwd)
+FILENAME=openwrt-$TARGET-$SUBTARGET-$PROFILE-squashfs-sysupgrade
+OPENWRT_SNAPSHOT_URL=https://downloads.openwrt.org/snapshots/targets/$TARGET/$SUBTARGET
 
 while true
 do
 	log "Checking snapshot version on downloads.openwrt.org.."
-	LATEST_SNAPSHOT=$(wget -qO- https://downloads.openwrt.org/snapshots/targets/ramips/mt7621/version.buildinfo)
+	LATEST_SNAPSHOT=$(wget -qO- $OPENWRT_SNAPSHOT_URL/version.buildinfo)
 	if [ "$LATEST_SNAPSHOT" == "$LOCAL_VERSION" ] || [ "$LATEST_SNAPSHOT" == "" ] ; then
 		log "No new version found!"
 		log "Sleeping for 30mins!"
 		sleep 1800
 	else
-		log "New version found: $LATEST_SNAPSHOT!"
-		LATEST_GITHUB=$(wget -qO- $URL/$FILENAME.version)
+	    log "New version found: $LATEST_SNAPSHOT!"
+		LATEST_GITHUB=$(wget -qO- $BUILD_URL/$FILENAME.version)
 		if [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ]; then
-		    DEVICE="ArcherC6Uv1"
             log "Executing git push to trigger GitHub build.."
+            chmod +x trigger_build.sh
             . ./trigger_build.sh
-            cd "$DIR"
             log "Build triggered on GitHub by push, waiting for completion.."
             while [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ];
             do
                 sleep 10
-                LATEST_GITHUB=$(wget -qO- $URL/$FILENAME.version)
+                LATEST_GITHUB=$(wget -qO- $BUILD_URL/$FILENAME.version)
             done
             log "Build completed on GitHub!"
         else

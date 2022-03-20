@@ -2,7 +2,7 @@
 
 START=99
 LOGGER_PROMPT="LiftOff"
-. /root/updater/logger.sh
+. /root/updater/common.sh
 
 start() {
     log "Lift off complete.."

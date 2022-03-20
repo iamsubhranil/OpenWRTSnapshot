@@ -1,7 +1,7 @@
 #!/bin/sh
 
 LOGGER_PROMPT="Orbiter"
-. /root/updater/logger.sh
+. /root/updater/common.sh
 
 set -e
 set -o pipefail

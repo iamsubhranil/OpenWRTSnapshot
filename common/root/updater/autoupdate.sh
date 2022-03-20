@@ -1,14 +1,12 @@
 #!/bin/sh
 
-log() {
-	echo "[$(date)] [LiftOff] $*" >> /root/upgrade.log
-}
+LOGGER_PROMPT="LiftOff"
+. /root/updater/common.sh
 
 set -e
 set -o pipefail
 
-FILENAME=openwrt-ramips-mt76x8-tplink_archer-c50-v4-squashfs-sysupgrade
-URL=https://github.com/iamsubhranil/OpenWRTSnapshot/releases/latest/download/
+FILENAME=openwrt-$TARGET-$SUBTARGET-$PROFILE-squashfs-sysupgrade
 LOCAL_FILE=/tmp/$FILENAME
 VER=$(cat /etc/openwrt_version)
 
@@ -16,7 +14,7 @@ log "Starting upgrade.."
 log "Current version: $VER"
 
 log "Checking remote version.."
-NEWVER=$(wget $URL/$FILENAME.version -qO-)
+NEWVER=$(wget $BUILD_URL/$FILENAME.version -qO-)
 log "Remote version: $NEWVER"
 
 if [ "$VER" == "$NEWVER" ]; then
@@ -28,10 +26,10 @@ log "Current and remote versions differ!"
 
 log "Downloading new firmware.."
 rm -rf $LOCAL_FILE.bin
-wget $URL/$FILENAME.bin -q -O $LOCAL_FILE.bin
+wget $BUILD_URL/$FILENAME.bin -q -O $LOCAL_FILE.bin
 
 log "Downloading sha256 of the firmware.."
-REMOTE_SHA=$(wget $URL/$FILENAME.sha256 -qO-)
+REMOTE_SHA=$(wget $BUILD_URL/$FILENAME.sha256 -qO-)
 
 log "Calculating sha256 of the downloaded firmware.."
 LOCAL_SHA=$(sha256sum $LOCAL_FILE.bin | cut -f1 -d' ')
@@ -47,7 +45,9 @@ if [ "$LOCAL_SHA" != "$REMOTE_SHA" ]; then
 fi
 
 log "Firmware verification completed successfully!"
+
 log "Copying first_boot notifier to uci-defaults.."
+chmod +x first_boot.sh
 cp first_boot.sh /etc/uci-defaults/
 
 # the new firmware will contain some version of the updater
