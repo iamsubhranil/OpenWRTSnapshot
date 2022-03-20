@@ -10,6 +10,9 @@ fi
 
 cd $REPO_DIR
 git pull
+# copy the root gitconfig since running git as a service
+# somehow does not take the config from root automatically
+cp /root/.gitconfig $REPO_DIR/
 mkdir -p logs
 
 cp /root/upgrade.log logs/c6uv1_upgrade.log
