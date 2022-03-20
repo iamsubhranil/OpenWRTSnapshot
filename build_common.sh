@@ -27,7 +27,7 @@ echo "Copying custom files.."
 # copy specific files
 cp -R files $BUILDER/
 # copy common files
-rsync -avh $COMMON_FILE_DIR $BUILDER/files
+rsync -avh $COMMON_FILE_DIR/ $BUILDER/files/
 
 echo "Preparing package list.."
 
