@@ -10,7 +10,7 @@ then
     echo
     echo "mkdir -p files/root/updater"
     echo "MODEL=files/root/updater/model.sh"
-    echo "echo \"#!/bin/bash\" >> \$MODEL"
+    echo "echo \"#!/bin/sh\" >> \$MODEL"
     echo "echo \"TARGET=<target>\" >> \$MODEL"
     echo "echo \"SUBTARGET=<subtarget>\" >> \$MODEL"
     echo "echo \"PROFILE=<profile>\" >> \$MODEL"
