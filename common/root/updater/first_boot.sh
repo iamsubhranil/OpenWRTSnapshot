@@ -7,6 +7,9 @@ VER=$(cat /etc/openwrt_version)
 log "Upgrade successful!"
 log "Current version: $VER"
 
+# explicitly set the scripts as executable
+chmod +x /root/updater/*
+
 ADDON="first_boot_extras.sh"
 
 if [ -f "$ADDON" ];
