@@ -1,9 +1,41 @@
 #!/bin/bash
 
-# Required variables: TARGET, SUBTARGET, PROFILE
+set -e
+set -o pipefail
+
+if [ ! -f "files/root/updater/model.sh" ];
+then
+    echo "model.sh cannot be found in current folder!"
+    echo "Run the following commands, and then try executing the script again:"
+    echo
+    echo "mkdir -p files/root/updater"
+    echo "MODEL=files/root/updater/model.sh"
+    echo "echo \"#!/bin/bash\" >> \$MODEL"
+    echo "echo \"TARGET=<target>\" >> \$MODEL"
+    echo "echo \"SUBTARGET=<subtarget>\" >> \$MODEL"
+    echo "echo \"PROFILE=<profile>\" >> \$MODEL"
+    echo "echo \"DEVICE=<device>\" >> \$MODEL"
+    echo "chmod +x \$MODEL"
+    exit 1
+fi
+
+echo "Getting device info.."
+chmod +x ./files/root/updater/model.sh
+. ./files/root/updater/model.sh
+
+echo "TARGET=$TARGET"
+echo "SUBTARGET=$SUBTARGET"
+echo "PROFILE=$PROFILE"
+echo "DEVICE=$DEVICE"
+
+if [ -z "${TARGET}" ] || [ -z "${SUBTARGET}" ] || [ -z "${PROFILE}" ] || [ -z "${DEVICE}" ];
+then
+    echo "One of TARGET, SUBTARGET, PROFILE or DEVICE is not defined!"
+    echo "Set the corresponding value in model.sh and try again!"
+    exit 1
+fi
 
 echo "Installing prerequisites.."
-
 chmod +x ../prereq.sh
 . ../prereq.sh
 
