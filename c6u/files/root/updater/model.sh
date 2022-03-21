@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 TARGET=ramips
 SUBTARGET=mt7621
