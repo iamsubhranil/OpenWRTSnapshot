@@ -15,5 +15,5 @@ ADDON="/root/updater/first_boot_extras.sh"
 if [ -f "$ADDON" ];
 then
     chmod +x $ADDON
-    sh $ADDON
+    . $ADDON
 fi
