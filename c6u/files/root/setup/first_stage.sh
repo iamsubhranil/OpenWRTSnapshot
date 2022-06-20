@@ -64,6 +64,9 @@ mkdir -p /mnt/sda1
 mount --bind /overlay /tmp/cproot
 mount ${DEVICE} /mnt/sda1
 tar -C /tmp/cproot -cvf - . | tar -C /mnt/sda1 -xf -
+
+sync
+
 umount /tmp/cproot /mnt/sda1
 rm -rf /mnt/sda1
 

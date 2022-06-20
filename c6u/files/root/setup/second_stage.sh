@@ -40,5 +40,7 @@ chmod +x /root/setup/z_setup_final_stage
 cp /root/setup/z_setup_final_stage /etc/init.d/
 /etc/init.d/z_setup_final_stage enable
 
+sync
+
 log "Rebooting.."
 reboot
