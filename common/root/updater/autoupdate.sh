@@ -10,6 +10,11 @@ FILENAME=openwrt-$TARGET-$SUBTARGET-$PROFILE-squashfs-sysupgrade
 LOCAL_FILE=/tmp/$FILENAME
 VER=$(cat /etc/openwrt_version)
 
+if [ "$1" == "-f" ];
+then
+    VER=$VER-forced
+fi
+
 log "Starting upgrade.."
 log "Current version: $VER"
 

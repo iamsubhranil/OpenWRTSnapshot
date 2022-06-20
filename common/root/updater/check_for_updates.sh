@@ -7,6 +7,12 @@ set -e
 set -o pipefail
 
 LOCAL_VERSION=$(cat /etc/openwrt_version)
+
+if [ "$1" == "-f" ];
+then
+    LOCAL_VERSION=$LOCAL_VERSION-forced
+fi
+
 FILENAME=openwrt-$TARGET-$SUBTARGET-$PROFILE-squashfs-sysupgrade
 OPENWRT_SNAPSHOT_URL=https://downloads.openwrt.org/snapshots/targets/$TARGET/$SUBTARGET
 
@@ -41,4 +47,4 @@ done
 
 log "Executing updater script.."
 chmod +x /root/updater/autoupdate.sh
-sh /root/updater/autoupdate.sh
+sh /root/updater/autoupdate.sh "$1"
