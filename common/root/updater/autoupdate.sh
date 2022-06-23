@@ -10,7 +10,7 @@ FILENAME=openwrt-$TARGET-$SUBTARGET-$PROFILE-squashfs-sysupgrade
 LOCAL_FILE=/tmp/$FILENAME
 VER=$(cat /etc/openwrt_version)
 
-if [ "$1" == "-f" ];
+if [ "$1" == "-f" ] || [ "$1" == "--force" ];
 then
     VER=$VER-forced
 fi
@@ -24,10 +24,15 @@ log "Remote version: $NEWVER"
 
 if [ "$VER" == "$NEWVER" ]; then
 	log "Both versions are the same!"
-	log "Skipping upgrade!"
-	exit
+	if [ "$1" == "-r" ] || [ "$1" == "--reflash" ];
+	    log "Reflashing the firmware.."
+	else
+	    log "Skipping upgrade!"
+	    exit
+    fi
+else
+    log "Current and remote versions differ!"
 fi
-log "Current and remote versions differ!"
 
 log "Downloading new firmware.."
 rm -rf $LOCAL_FILE.bin
