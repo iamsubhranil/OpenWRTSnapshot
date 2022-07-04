@@ -67,7 +67,7 @@ then
     rm -rf /root/updater_old
     rm -rf /tmp/$REPO_FOLDERNAME
     rm -f $RANDOM_NAME.tar
-    rm -f $RANDOM_NAME.tar.gz
+    rm -f $RANDOM_NAME
     log "Update successful!"
     exit
 elif [ "$1" == "-r" ] || [ "$1" == "--reflash" ];
