@@ -46,25 +46,28 @@ then
     LOGGER_PROMPT="Update"
     log "Updating updater scripts.."
     log "Generating temporary filename.."
-    RANDOM_NAME=$(mktemp /tmp/updater.XXXXXXXX)
+    RANDOM_NAME=$(mktemp /tmp/updater.XXXXXX)
     REPO_FOLDERNAME=OpenWRTSnapshot-main
     REPO_FILENAME=$RANDOM_NAME.tar.gz
     log "Downloading current repo.."
-    wget $REPO_URL/archive/master.tar.gz -O /tmp/$REPO_FILENAME
+    wget $REPO_URL/archive/master.tar.gz -O $REPO_FILENAME
+    cd /tmp
     log "Ungzipping the archive.."
-    gzip -d /tmp/$REPO_FILENAME
+    gzip -d $REPO_FILENAME
     log "Extracting the ungzipped archive.."
-    tar x -f /tmp/$RANDOM_NAME.tar
+    tar x -C /tmp -f $RANDOM_NAME.tar
     log "Backing up current files.."
-    mv /root/updater /root/updater_old 
+    mv /root/updater /root/updater_old
     mkdir -p /root/updater
     log "Copying new files to /root/updater.."
-    cp -R /tmp/$REPO_FOLDERNAME/common/root/updater/ /root/updater/
-    cp -R /tmp/$REPO_FOLDERNAME/$DEVICE/files/root/updater/ /root/updater/
+    cp -R /tmp/$REPO_FOLDERNAME/common/root/updater/* /root/updater/
+    cp -R /tmp/$REPO_FOLDERNAME/$DEVICE/files/root/updater/* /root/updater/
+    chmod +x /root/updater/*
     log "Removing backup and temporary files.."
     rm -rf /root/updater_old
     rm -rf /tmp/$REPO_FOLDERNAME
-    rm /tmp/$RANDOM_NAME.tar
+    rm -f $RANDOM_NAME.tar
+    rm -f $RANDOM_NAME.tar.gz
     log "Update successful!"
     exit
 elif [ "$1" == "-r" ] || [ "$1" == "--reflash" ];
