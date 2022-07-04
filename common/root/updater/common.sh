@@ -11,5 +11,6 @@ log() {
     fi
 }
 
-BUILD_URL=https://github.com/iamsubhranil/OpenWRTSnapshot/releases/latest/download/
+REPO_URL=https://github.com/iamsubhranil/OpenWRTSnapshot
+BUILD_URL=$REPO_URL/releases/latest/download/
 . /root/updater/model.sh
