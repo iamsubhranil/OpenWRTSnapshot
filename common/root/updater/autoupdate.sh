@@ -25,6 +25,7 @@ log "Remote version: $NEWVER"
 if [ "$VER" == "$NEWVER" ]; then
 	log "Both versions are the same!"
 	if [ "$1" == "-r" ] || [ "$1" == "--reflash" ];
+	then
 	    log "Reflashing the firmware.."
 	else
 	    log "Skipping upgrade!"
@@ -45,7 +46,8 @@ log "Calculating sha256 of the downloaded firmware.."
 LOCAL_SHA=$(sha256sum $LOCAL_FILE.bin | cut -f1 -d' ')
 
 log "Verifying downloaded firmware.."
-if [ "$LOCAL_SHA" != "$REMOTE_SHA" ]; then
+if [ "$LOCAL_SHA" != "$REMOTE_SHA" ];
+then
 	log "File verification failed!"
 	log "Local: $LOCAL_SHA"
 	log "Remote: $REMOTE_SHA"
