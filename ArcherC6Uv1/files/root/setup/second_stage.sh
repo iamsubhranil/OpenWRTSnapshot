@@ -29,6 +29,9 @@ log "Enabling vnstat_backup.."
 /etc/init.d/vnstat_backup restore
 /etc/init.d/vnstat_backup enable
 
+log "Enabling netbeat.."
+/etc/init.d/netbeat enable
+
 log "Disabling second stage.."
 /etc/init.d/z_setup_second_stage disable
 rm /etc/init.d/z_setup_second_stage
