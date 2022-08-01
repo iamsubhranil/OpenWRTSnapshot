@@ -1,0 +1,44 @@
+name: Ubuntu Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'build_requests.log'
+
+env:
+  c6uv1: mt7621-tplink_archer-c6u-v1
+  c50v6: mt76x8-tplink_archer-c50-v4
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        device: [ {name: ArcherC6Uv1, file: ${{ env.c6uv1 }} }, {name: ArcherC50v6, file: ${{ env.c50v6 }} } ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build ${{ matrix.device.name }}
+        run: chmod +x build_common.sh && cd ${{ matrix.device.name }} && ../build_common.sh
+      - name: Copy ${{ matrix.device.name }} firmware version
+        id: ${{ matrix.device.name }}_ver
+        run: echo "::set-output name=ver::$(cat images/openwrt-ramips-${{ matrix.device.file }}-squashfs-sysupgrade.version)"
+
+  post_build:
+    needs: build
+
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y.%m.%d_%H.%M.%S')"
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            images/*.bin
+            images/*.version
+            images/*.sha256
+          body: "Versions => Archer C6Uv1: ${{ jobs.build.steps.ArcherC6Uv1_ver.outputs.ver }}, Archer C50v6: ${{ jobs.build.steps.ArcherC50v6_ver.outputs.ver }}"
+          tag_name: ${{ steps.date.outputs.date }}
