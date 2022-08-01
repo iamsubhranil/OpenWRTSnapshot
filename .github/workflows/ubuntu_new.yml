@@ -1,4 +1,4 @@
-name: Ubuntu Build
+name: Ubuntu Build New
 
 on:
   workflow_dispatch:
@@ -14,8 +14,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
-      matrix:
-        device: [ {name: ArcherC6Uv1, file: ${{ env.c6uv1 }} }, {name: ArcherC50v6, file: ${{ env.c50v6 }} } ]
+        matrix:
+            device: [ {name: ArcherC6Uv1, file: ${{ env.c6uv1 }} }, {name: ArcherC50v6, file: ${{ env.c50v6 }} } ]
 
     steps:
       - name: Checkout
