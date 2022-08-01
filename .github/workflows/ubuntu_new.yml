@@ -20,8 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build ${{ matrix.device.name }}
-        run: chmod +x build_common.sh && cd ${{ matrix.device.name }} && ../build_common.sh
+      - name: Build ${{ matrix.device }}
+        run: chmod +x build_common.sh && cd ${{ matrix.device }} && ../build_common.sh
 
   post_build:
     runs-on: ubuntu-latest
