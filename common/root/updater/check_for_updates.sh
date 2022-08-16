@@ -106,7 +106,12 @@ do
             log "Executing git push to trigger GitHub build.."
             chmod +x trigger_build.sh
             . ./trigger_build.sh
-            log "Build triggered on GitHub by push, waiting for completion.."
+            log "Build triggered on GitHub by push.."
+            if [ -x "pre-update.sh" ]; then
+                log "Running pre-update hook.."
+                sh ./pre-update.sh
+            fi
+            log "Waiting for build completion.."
             while [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ];
             do
                 sleep 10
@@ -115,6 +120,10 @@ do
             log "Build completed on GitHub!"
         else
             log "New build already available in GitHub!"
+            if [ -x "pre-update.sh" ]; then
+                log "Running pre-update hook.."
+                sh ./pre-update.sh
+            fi
         fi
         break
 	fi
