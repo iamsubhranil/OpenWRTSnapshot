@@ -6,6 +6,21 @@ LOGGER_PROMPT="Ignition"
 set -e
 set -o pipefail
 
+executePreUpdateScript () { 
+    if [ -x "pre-update.sh" ]; then
+        log "Running pre-update hook.."
+        # switch to the script directory before exec
+        CURDIR=$(pwd)
+        CANONPATH=$(readlink -f "pre-update.sh")
+        SCRIPTDIR=$(dirname "$CANONPATH")
+        SCRIPTNAME=$(basename "$CANONPATH")
+        cd "$SCRIPTDIR"
+        sh ./$SCRIPTNAME
+        # switch back to the original directory
+        cd "$CURDIR"
+    fi
+}
+
 LOCAL_VERSION=$(cat /etc/openwrt_version)
 
 if [ "$1" ==  "-h" ] || [ "$1" == "--help" ];
@@ -107,10 +122,7 @@ do
             chmod +x trigger_build.sh
             . ./trigger_build.sh
             log "Build triggered on GitHub by push.."
-            if [ -x "pre-update.sh" ]; then
-                log "Running pre-update hook.."
-                sh ./pre-update.sh
-            fi
+            executePreUpdateScript
             log "Waiting for build completion.."
             while [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ];
             do
@@ -120,10 +132,7 @@ do
             log "Build completed on GitHub!"
         else
             log "New build already available in GitHub!"
-            if [ -x "pre-update.sh" ]; then
-                log "Running pre-update hook.."
-                sh ./pre-update.sh
-            fi
+            executePreUpdateScript
         fi
         break
 	fi
