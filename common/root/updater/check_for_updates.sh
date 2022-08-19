@@ -106,25 +106,25 @@ do
 		fi
 	else
 	    log "New version found: $LATEST_SNAPSHOT!"
-		LATEST_GITHUB=$(wget -qO- $BUILD_URL/$FILENAME.version)
-		if [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ]; then
-            log "Executing git push to trigger GitHub build.."
-            chmod +x trigger_build.sh
-            . ./trigger_build.sh
-            log "Build triggered on GitHub by push.."
-            executeHook pre-update
-            log "Waiting for build completion.."
-            while [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ];
-            do
-                sleep 10
-                LATEST_GITHUB=$(wget -qO- $BUILD_URL/$FILENAME.version)
-            done
-            log "Build completed on GitHub!"
-        else
-            log "New build already available in GitHub!"
-            executeHook pre-update
-        fi
-        break
+	    LATEST_GITHUB=$(wget -qO- $BUILD_URL/$FILENAME.version)
+	    if [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ]; then
+	        log "Executing git push to trigger GitHub build.."
+	        chmod +x trigger_build.sh
+	        . ./trigger_build.sh
+	        log "Build triggered on GitHub by push.."
+	        executeHook pre-update
+	        log "Waiting for build completion.."
+	        while [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ];
+	        do
+	            sleep 10
+	            LATEST_GITHUB=$(wget -qO- $BUILD_URL/$FILENAME.version)
+	        done
+	        log "Build completed on GitHub!"
+	    else
+	        log "New build already available in GitHub!"
+	        executeHook pre-update
+	    fi
+	    break
 	fi
 done
 
