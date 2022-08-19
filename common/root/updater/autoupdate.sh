@@ -1,7 +1,6 @@
 #!/bin/sh
 
 LOGGER_PROMPT="LiftOff"
-. /root/updater/common.sh
 
 set -e
 set -o pipefail
@@ -62,10 +61,12 @@ log "Copying first_boot notifier to uci-defaults.."
 chmod +x first_boot.sh
 cp first_boot.sh /etc/uci-defaults/
 
+executeHook pre-update-late
+
 # the new firmware will contain some version of the updater
 # scripts anyway, so we don't need to preserve them for now
-rm -rf /root/updater
-rm -rf /rwm/upper/root/updater
+rm -rf $BASEDIR
+rm -rf /rwm/upper$BASEDIR
 
 log "Starting upgrade.."
 sysupgrade -v $LOCAL_FILE.bin

@@ -19,9 +19,11 @@ then
     exit 1
 fi
 
+BASEDIR=/root/updater
+
 echo "Getting device info.."
-chmod +x ./files/root/updater/model.sh
-. ./files/root/updater/model.sh
+chmod +x ./files$BASEDIR/model.sh
+. ./files$BASEDIR/model.sh
 
 echo "TARGET=$TARGET"
 echo "SUBTARGET=$SUBTARGET"
@@ -60,6 +62,9 @@ echo "Copying custom files.."
 cp -R files $BUILDER/
 # copy common files
 rsync -avh $COMMON_FILE_DIR/ $BUILDER/files/
+
+sed -i "2 i BASEDIR=$BASEDIR" $BUILDER/files$BASEDIR/common.sh
+find $BUILDER/files -type f ! -name '*common.sh*' ! -name '*model.sh*' -exec sed -i "2 i . $BASEDIR/common.sh" {} \;
 
 echo "Preparing package list.."
 

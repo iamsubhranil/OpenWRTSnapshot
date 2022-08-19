@@ -1,25 +1,9 @@
 #!/bin/sh
 
 LOGGER_PROMPT="Ignition"
-. /root/updater/common.sh
 
 set -e
 set -o pipefail
-
-executePreUpdateScript () { 
-    if [ -x "pre-update.sh" ]; then
-        log "Running pre-update hook.."
-        # switch to the script directory before exec
-        CURDIR=$(pwd)
-        CANONPATH=$(readlink -f "pre-update.sh")
-        SCRIPTDIR=$(dirname "$CANONPATH")
-        SCRIPTNAME=$(basename "$CANONPATH")
-        cd "$SCRIPTDIR"
-        sh ./$SCRIPTNAME
-        # switch back to the original directory
-        cd "$CURDIR"
-    fi
-}
 
 LOCAL_VERSION=$(cat /etc/openwrt_version)
 
@@ -72,14 +56,17 @@ then
     log "Extracting the ungzipped archive.."
     tar x -C /tmp -f $RANDOM_NAME.tar
     log "Backing up current files.."
-    mv /root/updater /root/updater_old
-    mkdir -p /root/updater
-    log "Copying new files to /root/updater.."
-    cp -R /tmp/$REPO_FOLDERNAME/common/root/updater/* /root/updater/
-    cp -R /tmp/$REPO_FOLDERNAME/$DEVICE/files/root/updater/* /root/updater/
-    chmod +x /root/updater/*
+    mv $BASEDIR $BASEDIR-old
+    mkdir -p $BASEDIR
+    log "Copying new files to $BASEDIR.."
+    cp -R /tmp/$REPO_FOLDERNAME/common$BASEDIR/* $BASEDIR/
+    cp -R /tmp/$REPO_FOLDERNAME/$DEVICE/files$BASEDIR/* $BASEDIR/
+    chmod +x $BASEDIR/*
+    log "Updating BASEDIR.."
+    sed -i "2 i BASEDIR=$BASEDIR" $BASEDIR/common.sh
+    find $BASEDIR -type f ! -name '*common.sh*' ! -name '*model.sh*' -exec sed -i "2 i . $BASEDIR/common.sh" {} \;
     log "Removing backup and temporary files.."
-    rm -rf /root/updater_old
+    rm -rf $BASEDIR-old
     rm -rf /tmp/$REPO_FOLDERNAME
     rm -f $RANDOM_NAME.tar
     rm -f $RANDOM_NAME
@@ -100,6 +87,8 @@ fi
 
 FILENAME=openwrt-$TARGET-$SUBTARGET-$PROFILE-squashfs-sysupgrade
 OPENWRT_SNAPSHOT_URL=https://downloads.openwrt.org/snapshots/targets/$TARGET/$SUBTARGET
+
+executeHook pre-update-early
 
 while true
 do
@@ -122,7 +111,7 @@ do
             chmod +x trigger_build.sh
             . ./trigger_build.sh
             log "Build triggered on GitHub by push.."
-            executePreUpdateScript
+            executeHook pre-update
             log "Waiting for build completion.."
             while [ "$LATEST_GITHUB" != "$LATEST_SNAPSHOT" ];
             do
@@ -132,12 +121,12 @@ do
             log "Build completed on GitHub!"
         else
             log "New build already available in GitHub!"
-            executePreUpdateScript
+            executeHook pre-update
         fi
         break
 	fi
 done
 
 log "Executing updater script.."
-chmod +x /root/updater/autoupdate.sh
-sh /root/updater/autoupdate.sh "$1"
+chmod +x $BASEDIR/autoupdate.sh
+sh $BASEDIR/autoupdate.sh "$1"

@@ -1,0 +1,25 @@
+#!/bin/sh /etc/rc.common
+
+START=99
+LOGGER_PROMPT="LiftOff"
+
+start() {
+    log "Running post-update hooks.."
+
+    FILE=$(ls $HOOKSDIR | grep "post-update-stage*" | head -1)
+    while [ "$FILE" != "" ]; do
+        executeHook $FILE
+        log "Removing hook.."
+        rm $HOOKSDIR/$FILE
+        rebootIfNeeded
+        FILE=$(ls $HOOKSDIR | grep "post-update-stage*" | head -1)
+    done
+   
+    log "Post-update hook execution finished!"
+    log "Disabling and removing post-update service.."
+    /etc/init.d/z_updater_post_update disable
+    rm -f /rwm/upper/etc/rc.d/S99z_updater_post_update
+    rm -f /rwm/upper/etc/init.d/z_updater_post_update
+    rm /etc/init.d/z_updater_post_update
+    log "Post-update service complete!"
+}

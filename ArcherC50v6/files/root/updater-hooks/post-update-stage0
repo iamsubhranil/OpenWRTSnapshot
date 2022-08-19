@@ -1,0 +1,4 @@
+#!/bin/sh
+
+log "Pushing upgrade logs.."
+ssh root@192.168.1.1 "$BASEDIR/push_logs.sh"

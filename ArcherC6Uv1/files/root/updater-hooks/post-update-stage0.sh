@@ -1,7 +1,6 @@
 #!/bin/sh
 
 LOGGER_PROMPT="FirstStage"
-. /root/updater/common.sh
 
 set -e
 set -o pipefail
@@ -48,15 +47,6 @@ uci set fstab.swap="swap"
 uci set fstab.swap.device="/dev/sda3"
 uci commit fstab
 
-log "Preparing second stage.."
-chmod +x /root/setup/z_setup_second_stage
-cp /root/setup/z_setup_second_stage /etc/init.d/z_setup_second_stage
-/etc/init.d/z_setup_second_stage enable
-
-log "Disabling and removing first stage.."
-/etc/init.d/z_setup_first_stage disable
-rm /etc/init.d/z_setup_first_stage
-
 DEVICE="/dev/sda1"
 log "Transferring data to new /overlay.."
 mkdir -p /tmp/cproot
@@ -70,5 +60,5 @@ sync
 umount /tmp/cproot /mnt/sda1
 rm -rf /mnt/sda1
 
-log "Rebooting.."
-reboot
+log "Scheduling reboot.."
+scheduleReboot
