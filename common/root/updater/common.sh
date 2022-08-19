@@ -5,7 +5,7 @@ REPO_URL=https://github.com/iamsubhranil/OpenWRTSnapshot
 BUILD_URL=$REPO_URL/releases/latest/download/
 # BASEDIR will be written by build_common.sh
 HOOKSDIR=$BASEDIR-hooks
-NEEDSREBOOT=$HOOKSDIR/.needs-reboot
+NEEDSREBOOT=/tmp/.updater-needs-reboot
 
 . $BASEDIR/model.sh
 
@@ -47,10 +47,8 @@ scheduleReboot() {
 }
 
 rebootIfNeeded() {
-    if [ -f "$NEEDSREBOOT" ]; then
+    if [ -e "$NEEDSREBOOT" ]; then
         log "Rebooting.."
-        rm $NEEDSREBOOT
-        rm -f /rwm/upper$NEEDSREBOOT
         reboot
     fi
 }
