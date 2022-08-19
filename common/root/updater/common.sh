@@ -50,6 +50,7 @@ rebootIfNeeded() {
     if [ -f "$NEEDSREBOOT" ]; then
         log "Rebooting.."
         rm $NEEDSREBOOT
+        rm -f /rwm/upper$NEEDSREBOOT
         reboot
     fi
 }

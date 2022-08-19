@@ -11,6 +11,7 @@ start() {
         executeHook $FILE
         log "Removing hook.."
         rm $HOOKSDIR/$FILE
+        rm -f /rwm/upper$HOOKSDIR/$FILE
         rebootIfNeeded
         FILE=$(ls $HOOKSDIR | grep "post-update-stage*" | head -1)
     done
