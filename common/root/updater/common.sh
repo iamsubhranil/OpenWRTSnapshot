@@ -25,7 +25,7 @@ log() {
 # post-update       # at init.d
 
 executeHook() { 
-    SCRIPTLOC="$HOOKSDIR/$1.sh"
+    SCRIPTLOC="$HOOKSDIR/$1"
     if [ -f "$SCRIPTLOC" ]; then
         chmod +x "$SCRIPTLOC"
         log "Running $1 hook.."
