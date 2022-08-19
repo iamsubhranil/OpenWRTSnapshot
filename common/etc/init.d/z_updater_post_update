@@ -13,14 +13,19 @@ start() {
         rm $HOOKSDIR/$FILE
         rm -f /rwm/upper$HOOKSDIR/$FILE
         rebootIfNeeded
+        if [ -e "$NEEDSREBOOT" ]; then
+            break
+        fi
         FILE=$(ls $HOOKSDIR | grep "post-update-stage*" | head -1)
     done
-   
-    log "Post-update hook execution finished!"
-    log "Disabling and removing post-update service.."
-    /etc/init.d/z_updater_post_update disable
-    rm -f /rwm/upper/etc/rc.d/S99z_updater_post_update
-    rm -f /rwm/upper/etc/init.d/z_updater_post_update
-    rm /etc/init.d/z_updater_post_update
-    log "Post-update service complete!"
+  
+    if [ ! -e "$NEEDSREBOOT" ]; then
+        log "Post-update hook execution finished!"
+        log "Disabling and removing post-update service.."
+        /etc/init.d/z_updater_post_update disable
+        rm -f /rwm/upper/etc/rc.d/S99z_updater_post_update
+        rm -f /rwm/upper/etc/init.d/z_updater_post_update
+        rm /etc/init.d/z_updater_post_update
+        log "Post-update service complete!"
+    fi
 }
