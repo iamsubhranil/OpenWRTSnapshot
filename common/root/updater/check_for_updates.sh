@@ -97,12 +97,13 @@ do
 	if [ "$LATEST_SNAPSHOT" == "$LOCAL_VERSION" ] || [ "$LATEST_SNAPSHOT" == "" ] ; then
 		log "No new version found!"
 		if [ "$1" == "-r" ] || [ "$1" == "--reflash" ];
-        then
-            log "Proceeding with reflash.."
-        else
+		then
+		    log "Proceeding with reflash.."
+		    break
+		else
 		    log "Sleeping for 30mins!"
 		    sleep 1800
-        fi
+		fi
 	else
 	    log "New version found: $LATEST_SNAPSHOT!"
 		LATEST_GITHUB=$(wget -qO- $BUILD_URL/$FILENAME.version)
