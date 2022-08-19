@@ -60,5 +60,4 @@ sync
 umount /tmp/cproot /mnt/sda1
 rm -rf /mnt/sda1
 
-log "Scheduling reboot.."
 scheduleReboot

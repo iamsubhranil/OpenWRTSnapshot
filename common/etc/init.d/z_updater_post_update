@@ -6,12 +6,19 @@ LOGGER_PROMPT="LiftOff"
 start() {
     log "Running post-update hooks.."
 
+    LASTRUNLOC=$HOOKSDIR/.last-run
+    if [ -e "$LASTRUNLOC" ]; then
+        LASTRUN=$(cat $LASTRUNLOC)
+        rm -f $HOOKSDIR/$LASTRUN
+    fi
+
     FILE=$(ls $HOOKSDIR | grep "post-update-stage*" | head -1)
     while [ "$FILE" != "" ]; do
         executeHook $FILE
         log "Removing hook.."
         rm $HOOKSDIR/$FILE
         rm -f /rwm/upper$HOOKSDIR/$FILE
+        echo "$FILE" > $LASTRUNLOC
         rebootIfNeeded
         if [ -e "$NEEDSREBOOT" ]; then
             break
