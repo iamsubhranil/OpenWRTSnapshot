@@ -49,6 +49,11 @@ scheduleReboot() {
 rebootIfNeeded() {
     if [ -e "$NEEDSREBOOT" ]; then
         log "Rebooting.."
-        reboot
+        while true
+        do
+            reboot
+            sleep 15
+            log "Reboot failed! Retrying.."
+        done
     fi
 }
