@@ -64,7 +64,7 @@ cp -R files $BUILDER/
 rsync -avh $COMMON_FILE_DIR/ $BUILDER/files/
 
 sed -i "2 i BASEDIR=$BASEDIR" $BUILDER/files$BASEDIR/common.sh
-find $BUILDER/files -type f ! -name '*common.sh*' ! -name '*model.sh*' -exec sed -i "2 i . $BASEDIR/common.sh" {} \;
+find $BUILDER/files -type f ! -name '*common.sh*' ! -name '*model.sh*' ! -name '*.list' -exec sed -i "2 i . $BASEDIR/common.sh" {} \;
 
 echo "Preparing package list.."
 

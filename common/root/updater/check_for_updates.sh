@@ -64,7 +64,7 @@ then
     chmod +x $BASEDIR/*
     log "Updating BASEDIR.."
     sed -i "2 i BASEDIR=$BASEDIR" $BASEDIR/common.sh
-    find $BASEDIR -type f ! -name '*common.sh*' ! -name '*model.sh*' -exec sed -i "2 i . $BASEDIR/common.sh" {} \;
+    find $BASEDIR -type f ! -name '*common.sh*' ! -name '*model.sh*' ! -name '*.list' -exec sed -i "2 i . $BASEDIR/common.sh" {} \;
     log "Removing backup and temporary files.."
     rm -rf $BASEDIR-old
     rm -rf /tmp/$REPO_FOLDERNAME

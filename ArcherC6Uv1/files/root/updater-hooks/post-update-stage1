@@ -15,12 +15,12 @@ exec 3>&1 4>&2 >>/root/upgrade_output.log 2>&1
 
 # log "Starting second stage.."
 
-PACKAGES=$(cat $HOOKSDIR/post-update-stage1-packages | tr '\n' ' ')
+PACKAGES=$(cat $HOOKSDIR/stage1-packages.list | tr '\n' ' ')
 log "Installing packages: $PACKAGES"
 opkg update
 opkg install $PACKAGES
 
-rm $HOOKSDIR/post-update-stage1-packages
+rm $HOOKSDIR/stage1-packages.list
 
 log "Enabling openssh.."
 /etc/init.d/dropbear disable
