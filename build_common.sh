@@ -3,13 +3,15 @@
 set -e
 set -o pipefail
 
-if [ ! -f "files/root/updater/model.sh" ];
+BASEDIR=/root/updater
+
+if [ ! -f "files$BASEDIR/model.sh" ];
 then
     echo "model.sh cannot be found in current folder!"
     echo "Run the following commands, and then try executing the script again:"
     echo
-    echo "mkdir -p files/root/updater"
-    echo "MODEL=files/root/updater/model.sh"
+    echo "mkdir -p files$BASEDIR"
+    echo "MODEL=files$BASEDIR/model.sh"
     echo "echo \"#!/bin/sh\" >> \$MODEL"
     echo "echo \"TARGET=<target>\" >> \$MODEL"
     echo "echo \"SUBTARGET=<subtarget>\" >> \$MODEL"
@@ -18,8 +20,6 @@ then
     echo "chmod +x \$MODEL"
     exit 1
 fi
-
-BASEDIR=/root/updater
 
 echo "Getting device info.."
 chmod +x ./files$BASEDIR/model.sh
