@@ -11,8 +11,6 @@ start() {
         executeHook $FILE
         log "Removing hook.."
         rm $HOOKSDIR/$FILE
-        rm -f /rwm/upper$HOOKSDIR/$FILE
-        rm -f /overlay/upper$HOOKSDIR/$FILE
         rebootIfNeeded
         if [ -e "$NEEDSREBOOT" ]; then
             break
