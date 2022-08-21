@@ -55,8 +55,14 @@ mount --bind /overlay /tmp/cproot
 mount ${DEVICE} /mnt/sda1
 tar -C /tmp/cproot -cvf - . | tar -C /mnt/sda1 -xf -
 
+log "Removing $HOOKSDIR and $BASEDIR from new /overlay.."
+rm -rf /mnt/sda1/upper$HOOKSDIR
+rm -rf /mnt/sda1/upper$BASEDIR
+
+log "Syncing filesystem.."
 sync
 
+log "Unmounting new /overlay.."
 umount /tmp/cproot /mnt/sda1
 rm -rf /mnt/sda1
 
