@@ -49,6 +49,6 @@ scheduleReboot() {
 rebootIfNeeded() {
     if [ -e "$NEEDSREBOOT" ]; then
         log "Scheduling reboot after 10s.."
-        reboot -n 10
+        reboot -d 10
     fi
 }
