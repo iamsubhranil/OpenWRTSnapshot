@@ -30,8 +30,9 @@ log "Enabling vnstat_backup.."
 /etc/init.d/vnstat_backup restore
 /etc/init.d/vnstat_backup enable
 
-log "Enabling netbeat.."
+log "Enabling netbeat and homeservercheck.."
 /etc/init.d/netbeat enable
+/etc/init.d/homeservercheck enable
 
 sync
 
