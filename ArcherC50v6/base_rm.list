@@ -1,1 +1,1 @@
--wpad-basic-wolfssl -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -odhcpd-ipv6only -luci-proto-ppp -luci-proto-ipv6 -kmod-nf-conntrack6 -kmod-nf-ipt6 -kmod-mt76x02-common -kmod-mt76x2 -kmod-mt76x2-common
+-wpad-basic-wolfssl -ppp -ppp-mod-pppoe -ip6tables -odhcp6c -kmod-ipv6 -kmod-ip6tables -odhcpd-ipv6only -luci-proto-ppp -luci-proto-ipv6 -kmod-nf-conntrack6 -kmod-nf-ipt6 -kmod-mt76x02-common -kmod-mt76x2 -kmod-mt76x2-common -wpad-basic-mbedtls
