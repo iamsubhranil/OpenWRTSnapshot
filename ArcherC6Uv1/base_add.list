@@ -9,7 +9,7 @@ luci-base
 luci-app-firewall
 luci-app-https-dns-proxy
 luci-app-opkg
-luci-app-simple-adblock
+luci-app-adblock-fast
 luci-mod-admin-full
 luci-mod-network
 luci-mod-status
