@@ -56,7 +56,7 @@ wget -q https://downloads.openwrt.org/snapshots/targets/$TARGET/$SUBTARGET/versi
 
 echo "Extracting image builder.."
 unzstd $BUILDER.tar.zst
-tar -J -x -f $BUILDER.tar
+tar -xvf $BUILDER.tar
 
 echo "Copying custom files.."
 # copy specific files
