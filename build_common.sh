@@ -51,11 +51,11 @@ rm -rf $BUILDER $BUILDER.tar.xz
 echo "Downloading image builder.."
 
 mkdir -p $IMAGE_DIR
-wget -q https://downloads.openwrt.org/snapshots/targets/$TARGET/$SUBTARGET/$BUILDER.tar.xz
+wget -q https://downloads.openwrt.org/snapshots/targets/$TARGET/$SUBTARGET/$BUILDER.tar.zst
 wget -q https://downloads.openwrt.org/snapshots/targets/$TARGET/$SUBTARGET/version.buildinfo -O $IMAGE_DIR/$FILENAME.version
 
 echo "Extracting image builder.."
-tar -J -x -f $BUILDER.tar.xz
+tar -J -x -f --zstd $BUILDER.tar.zst
 
 echo "Copying custom files.."
 # copy specific files
